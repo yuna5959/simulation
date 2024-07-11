@@ -87,15 +87,15 @@ function update() {
     }
 
     // 지면에 닿으면 멈춤
-    if (y < 0) {
+    if (y <= 0) {
         y = 0;
         v = 0;
-        draw();
-        return;
+        cancelAnimationFrame(updateId);
+    } else {
+        updateId = requestAnimationFrame(update);
     }
 
     draw();
-    requestAnimationFrame(update);
 }
 
 // 마우스 이벤트 핸들러
@@ -106,7 +106,7 @@ canvas.addEventListener('mousedown', function(event) {
 
     if (Math.abs(mouseY - ballY) < 10) {
         isDragging = true;
-        cancelAnimationFrame(updateId);  // 드래그 시작 시 애니메이션 중지
+        cancelAnimationFrame(updateId);
     }
 });
 
@@ -123,11 +123,10 @@ canvas.addEventListener('mousemove', function(event) {
 canvas.addEventListener('mouseup', function() {
     if (isDragging) {
         isDragging = false;
-        initialHeight = y;
         v = 0;
         t = 0;
-        speedMeasured = false; // 속도 측정 초기화
-        updateId = requestAnimationFrame(update);  // 마우스 버튼을 놓았을 때 시뮬레이션 시작
+        speedMeasured = false;
+        updateId = requestAnimationFrame(update);
     }
 });
 

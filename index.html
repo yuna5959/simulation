@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물리 실험 메인 페이지</title>
+    <style>
+        body {
+            font-family: '맑은 고딕', 'Malgun Gothic', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #main-container {
+            text-align: center;
+        }
+        .experiment-block {
+            display: inline-block;
+            width: 200px;
+            height: 150px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .experiment-block:hover {
+            background-color: #e0e0e0;
+            border-color: #999;
+        }
+        .experiment-block a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-container">   
+        <h1>물리 실험 메인 페이지</h1>
+        <div class="experiment-block">
+            <a href="index.html">자유 낙하 실험</a>
+        </div>
+        <!-- 다른 실험 블록들도 추가할 수 있습니다. -->
+    </div>
+</body>
+</html>

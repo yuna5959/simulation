@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScript를 이용한 물리 시뮬레이션</title>
+    <style>
+        body {
+            font-family: '맑은 고딕', 'Malgun Gothic', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #simulation-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="simulation-container">
+        <h1>자유 낙하 시뮬레이션</h1>
+        <canvas id="sim-canvas" width="400" height="400"></canvas>
+        <br>
+        <button id="start-btn">시뮬레이션 시작</button>
+    </div>
+
+    <!-- freefall.js 파일을 포함시키는 부분 -->
+    <script src="freefall.js"></script>
+</body>
+</html>

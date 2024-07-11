@@ -17,8 +17,14 @@
         #main-container {
             text-align: center;
         }
+        .experiment-link {
+            text-decoration: none;
+            color: #333;
+        }
         .experiment-block {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 200px;
             height: 150px;
             margin: 20px;
@@ -28,25 +34,24 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s, border-color 0.3s;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
         }
         .experiment-block:hover {
             background-color: #e0e0e0;
             border-color: #999;
-        }
-        .experiment-block a {
-            text-decoration: none;
-            color: #333;
-            font-size: 10px;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div id="main-container">   
         <h1>물리 실험 메인 페이지</h1>
-        <div class="experiment-block">
-            <a href="free-fall.html">자유 낙하 실험</a>
-        </div>
+        <a href="free-fall.html" class="experiment-link">
+            <div class="experiment-block">
+                자유 낙하 실험
+            </div>
+        </a>
         <!-- 다른 실험 블록들도 추가할 수 있습니다. -->
     </div>
 </body>

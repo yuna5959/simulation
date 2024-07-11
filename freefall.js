@@ -2,22 +2,25 @@
 const g = 9.81;  // 중력 가속도 (m/s^2)
 const dt = 0.1;  // 시간 간격 (s)
 
+// 변수
+let y = 0;  // 초기 높이 (m)
+let v = 0;  // 초기 속도 (m/s)
+let t = 0;  // 시간 (s)
+let isDragging = false;  // 드래그 상태
+let speedMeasured = false; // 속도 측정 여부
+let measuredSpeed = 0; // 측정된 속도
+
+// 속도 측정기 위치 (지면에서 약간 위)
+const groundHeight = 10; // 지면 높이 (픽셀)
+const speedMeterHeight = groundHeight + 20; // 지면 위 20 픽셀 위치
+const ballRadius = 15; // 공의 반지름 (픽셀)
+
 // 캔버스와 컨텍스트 가져오기
 let canvas = document.getElementById('sim-canvas');
 let ctx = canvas.getContext('2d');
 
-// 속도 측정기 위치 (캔버스 바닥에서 50픽셀 위)
-const groundHeight = 50;
-const speedMeterPosition = (canvas.height - groundHeight) / 10; // 위치를 미터 단위로 변환
-
-// 변수
-let y = canvas.height / 10 - groundHeight / 10;  // 초기 높이 (m)
-let v = 0;  // 초기 속도 (m/s)
-let t = 0;  // 시간 (s)
-let initialHeight = y; // 초기 높이 저장
-let isDragging = false;  // 드래그 상태
-let speedMeasured = false; // 속도 측정 여부
-let measuredSpeed = 0; // 측정된 속도
+// 초기 높이 (화면 상단에서 시작)
+const initialHeight = (canvas.height - groundHeight - ballRadius) / 10;
 
 // 눈금 그리기 함수
 function drawGrid() {
@@ -54,22 +57,22 @@ function draw() {
 
     // 속도 측정기 그리기
     ctx.fillStyle = 'blue';
-    ctx.fillRect(0, canvas.height - groundHeight - 2, canvas.width, 4);
+    ctx.fillRect(0, canvas.height - speedMeterHeight - 2, canvas.width, 4);
 
     // 공 그리기
     ctx.fillStyle = 'red';
     ctx.beginPath();
-    ctx.arc(canvas.width / 2, canvas.height - (y + groundHeight / 10) * 10, 10, 0, 2 * Math.PI);
+    ctx.arc(canvas.width / 2, canvas.height - y * 10 - groundHeight - ballRadius, ballRadius, 0, 2 * Math.PI);
     ctx.fill();
 
     // 현재 높이 표시
     ctx.fillStyle = 'black';
     ctx.font = '20px Arial';
-    ctx.fillText(`높이: ${y.toFixed(2)} m`, 10, 30);
+    ctx.fillText(`Current Height: ${(y).toFixed(2)} m`, 10, 30);
 
     // 측정된 속도 표시
     if (speedMeasured) {
-        ctx.fillText(`측정 속도: ${measuredSpeed.toFixed(2)} m/s`, 10, 60);
+        ctx.fillText(`Measured Speed: ${measuredSpeed.toFixed(2)} m/s`, 10, 60);
     }
 }
 
@@ -80,30 +83,31 @@ function update() {
     t += dt;
 
     // 속도 측정기 통과 시 속도 측정
-    if (!speedMeasured && y <= 0) {
+    if (!speedMeasured && y * 10 <= canvas.height - speedMeterHeight - groundHeight - ballRadius) {
         measuredSpeed = v;
         speedMeasured = true;
     }
 
     // 지면에 닿으면 멈춤
-    if (y < 0) {
-        y = 0;
+    if (y * 10 - ballRadius <= 0) {
+        y = ballRadius / 10;
         v = 0;
-        draw();
-        return;
     }
 
     draw();
-    requestAnimationFrame(update);
+
+    if (y * 10 + ballRadius < canvas.height - groundHeight) {
+        requestAnimationFrame(update);
+    }
 }
 
 // 마우스 이벤트 핸들러
 canvas.addEventListener('mousedown', function(event) {
     let rect = canvas.getBoundingClientRect();
     let mouseY = event.clientY - rect.top;
-    let ballY = canvas.height - (y + groundHeight / 10) * 10;
+    let ballY = canvas.height - y * 10 - groundHeight - ballRadius;
 
-    if (Math.abs(mouseY - ballY) < 10) {
+    if (Math.abs(mouseY - ballY) < ballRadius) {
         isDragging = true;
     }
 });
@@ -112,7 +116,7 @@ canvas.addEventListener('mousemove', function(event) {
     if (isDragging) {
         let rect = canvas.getBoundingClientRect();
         let mouseY = event.clientY - rect.top;
-        y = (canvas.height - mouseY - groundHeight) / 10;
+        y = (canvas.height - mouseY - groundHeight - ballRadius) / 10;
         if (y < 0) y = 0;
         draw();
     }
@@ -121,7 +125,6 @@ canvas.addEventListener('mousemove', function(event) {
 canvas.addEventListener('mouseup', function() {
     if (isDragging) {
         isDragging = false;
-        initialHeight = y;
         v = 0;
         t = 0;
         speedMeasured = false; // 속도 측정 초기화
@@ -130,7 +133,7 @@ canvas.addEventListener('mouseup', function() {
 
 // 시뮬레이션 시작
 document.getElementById('start-btn').addEventListener('click', function() {
-    y = initialHeight;
+    y = initialHeight; // 공을 초기 위치로 설정
     v = 0;
     t = 0;
     speedMeasured = false; // 속도 측정 초기화

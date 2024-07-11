@@ -11,10 +11,10 @@ const groundHeight = 50;
 const speedMeterPosition = (canvas.height - groundHeight) / 10; // 위치를 미터 단위로 변환
 
 // 변수
-let y = 0;  // 초기 높이 (m)
+let y = canvas.height / 10 - groundHeight / 10;  // 초기 높이 (m)
 let v = 0;  // 초기 속도 (m/s)
 let t = 0;  // 시간 (s)
-let initialHeight = 0; // 초기 높이 저장
+let initialHeight = y; // 초기 높이 저장
 let isDragging = false;  // 드래그 상태
 let speedMeasured = false; // 속도 측정 여부
 let measuredSpeed = 0; // 측정된 속도

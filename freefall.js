@@ -60,7 +60,26 @@ function draw() {
         ctx.fillText(`측정 속도: ${measuredSpeed.toFixed(2)} m/s`, 10, 60);
     }
 }
-
+// 업데이트 함수
+function update() {
+    v += g * dt;
+    y -= v * dt;
+    t += dt;
+    // 속도 측정기 통과 시 속도 측정
+    if (!speedMeasured && y <= 0) {
+        measuredSpeed = v;
+        speedMeasured = true;
+    }
+    // 지면에 닿으면 멈춤
+    if (y < 0) {
+        y = 0;
+        v = 0;
+        draw();
+        return;
+    }
+    draw();
+    requestAnimationFrame(update);
+}
 
 // 업데이트 함수
 function update() {
@@ -69,24 +88,41 @@ function update() {
     t += dt;
 
     // 속도 측정기 통과 시 속도 측정
-    if (!speedMeasured && y <= 0) {
-    if (!speedMeasured && y <= speedMeterPosition && y > 0) {
+    if (!speedMeasured && y <= speedMeterPosition) {
         measuredSpeed = v;
         speedMeasured = true;
     }
-@@ -105,6 +106,7 @@ canvas.addEventListener('mousedown', function(event) {
+
+    // 지면에 닿으면 멈춤
+    if (y < 0) {
+        y = 0;
+        v = 0;
+        draw();
+        return;
+    }
+
+    draw();
+    requestAnimationFrame(update);
+}
+
+// 마우스 이벤트 핸들러
+canvas.addEventListener('mousedown', function(event) {
+    let rect = canvas.getBoundingClientRect();
+@@ -105,6 +129,8 @@ canvas.addEventListener('mousedown', function(event) {
 
     if (Math.abs(mouseY - ballY) < 10) {
         isDragging = true;
-        cancelAnimationFrame(updateId);  // 드래그 시작 시 애니메이션 중지
+        // 드래그 시작 시 애니메이션 중지
+        cancelAnimationFrame(updateId);
     }
 });
 
-@@ -125,17 +127,12 @@ canvas.addEventListener('mouseup', function() {
+@@ -125,17 +151,13 @@ canvas.addEventListener('mouseup', function() {
         v = 0;
         t = 0;
         speedMeasured = false; // 속도 측정 초기화
-        updateId = requestAnimationFrame(update);  // 마우스 버튼을 놓았을 때 시뮬레이션 시작
+        // 마우스 버튼을 놓았을 때 시뮬레이션 시작
+        updateId = requestAnimationFrame(update);
     }
 });
 
@@ -100,6 +136,7 @@ document.getElementById('start-btn').addEventListener('click', function() {
 });
 
 // 초기 그리기
+draw();
 draw();
 
 // updateId 변수 추가

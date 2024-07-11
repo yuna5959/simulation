@@ -73,6 +73,7 @@ function draw() {
     }
 }
 
+
 // 업데이트 함수
 function update() {
     v += g * dt;
@@ -80,7 +81,7 @@ function update() {
     t += dt;
 
     // 속도 측정기 통과 시 속도 측정
-    if (!speedMeasured && y <= 0) {
+    if (!speedMeasured && y <= speedMeterPosition && y > 0) {
         measuredSpeed = v;
         speedMeasured = true;
     }
@@ -105,6 +106,7 @@ canvas.addEventListener('mousedown', function(event) {
 
     if (Math.abs(mouseY - ballY) < 10) {
         isDragging = true;
+        cancelAnimationFrame(updateId);  // 드래그 시작 시 애니메이션 중지
     }
 });
 
@@ -125,17 +127,12 @@ canvas.addEventListener('mouseup', function() {
         v = 0;
         t = 0;
         speedMeasured = false; // 속도 측정 초기화
+        updateId = requestAnimationFrame(update);  // 마우스 버튼을 놓았을 때 시뮬레이션 시작
     }
-});
-
-// 시뮬레이션 시작
-document.getElementById('start-btn').addEventListener('click', function() {
-    y = initialHeight;
-    v = 0;
-    t = 0;
-    speedMeasured = false; // 속도 측정 초기화
-    update();
 });
 
 // 초기 그리기
 draw();
+
+// updateId 변수 추가
+let updateId;

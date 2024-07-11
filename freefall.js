@@ -97,30 +97,6 @@ function update() {
     requestAnimationFrame(update);
 }
 
-// 업데이트 함수
-function update() {
-    v += g * dt;
-    y -= v * dt;
-    t += dt;
-
-    // 속도 측정기 통과 시 속도 측정
-    if (!speedMeasured && y <= speedMeterPosition) {
-        measuredSpeed = v;
-        speedMeasured = true;
-    }
-
-    // 지면에 닿으면 멈춤
-    if (y < 0) {
-        y = 0;
-        v = 0;
-        draw();
-        return;
-    }
-
-    draw();
-    requestAnimationFrame(update);
-}
-
 // 마우스 이벤트 핸들러
 canvas.addEventListener('mousedown', function(event) {
     let rect = canvas.getBoundingClientRect();

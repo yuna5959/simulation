@@ -7,19 +7,31 @@
     <style>
         body {
             font-family: '맑은 고딕', 'Malgun Gothic', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
             background-color: #f0f0f0;
         }
         #main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        h1 {
             text-align: center;
+            margin-bottom: 30px;
+        }
+        .experiments-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 0 20px;
         }
         .experiment-link {
             text-decoration: none;
             color: #333;
+            margin: 10px;
         }
         .experiment-block {
             display: flex;
@@ -27,8 +39,6 @@
             justify-content: center;
             width: 200px;
             height: 150px;
-            margin: 20px;
-            padding: 20px;
             background-color: #fff;
             border: 2px solid #ccc;
             border-radius: 10px;
@@ -47,12 +57,14 @@
 <body>
     <div id="main-container">   
         <h1>물리 실험 메인 페이지</h1>
-        <a href="free-fall.html" class="experiment-link">
-            <div class="experiment-block">
-                자유 낙하 실험
-            </div>
-        </a>
-        <!-- 다른 실험 블록들도 추가할 수 있습니다. -->
+        <div class="experiments-container">
+            <a href="free-fall.html" class="experiment-link">
+                <div class="experiment-block">
+                    자유 낙하 실험
+                </div>
+            </a>
+            <!-- 다른 실험 블록들도 추가할 수 있습니다. -->
+        </div>
     </div>
 </body>
 </html>

@@ -121,3 +121,6 @@ canvas.addEventListener('mouseup', function() {
         updateId = requestAnimationFrame(update);  // 마우스 버튼을 놓았을 때 시뮬레이션 시작
     }
 });
+
+// 초기화 및 첫 번째 드로우 호출
+draw();

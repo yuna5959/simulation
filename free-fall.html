@@ -17,14 +17,40 @@
         #simulation-container {
             text-align: center;
         }
+        /* 버튼 스타일 수정 */
+        .go-to-index-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            background-color: #ffffff; /* 버튼 배경색 하얀색 */
+            color: #000000; /* 글자 색상 검정 */
+            border: 2px solid #000; /* 테두리 검정색 */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .go-to-index-btn:hover {
+            background-color: #f0f0f0; /* 호버 시 배경색 살짝 회색으로 변경 */
+        }
     </style>
 </head>
+
 <body>
     <div id="simulation-container">
-        <h1>자유 낙하 시뮬레이션</h1>
+        <h1>자유 낙하 실험 시뮬레이션</h1>
         <canvas id="sim-canvas" width="800" height="600"></canvas>
     </div>
 
+    <!-- 버튼 -->
+    <button class="go-to-index-btn" onclick="goToIndex()">메인 페이지로 돌아가기</button>
+
     <script src="freefall.js"></script>
+
+    <script>
+        function goToIndex() {
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>

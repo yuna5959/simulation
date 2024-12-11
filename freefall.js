@@ -132,7 +132,7 @@ canvas.addEventListener('mouseup', function() {
 });
 
 // 초기 높이 설정 후 시뮬레이션 자동 시작
-y = 10;  // 초기 높이 10m로 설정
+y = 40;  // 초기 높이 10m로 설정
 v = 0;  // 초기 속도
 t = 0;  // 초기 시간
 speedMeasured = false;  // 속도 측정 초기화
